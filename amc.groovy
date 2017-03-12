@@ -522,11 +522,20 @@ if (getRenameLog().size() > 0) {
 	// messages used for kodi / plex / emby pushover notifications
 	def getNotificationTitle = {
 		def count = getRenameLog().count{ k, v -> !v.isSubtitle() }
+		if (count > 1) {
+		    return "$count éléments ajoutés à la médiathèque"
+		} else {
+		    return "$count élément ajouté à la médiathèque"
+		}
 		return "FileBot finished processing $count files"
 	}.memoize()
 
 	def getNotificationMessage = { prefix = '• ', postfix = '\n' -> 
-		return ut.title ?: (input.findAll{ !it.isSubtitle() } ?: input).collect{ relativeInputPath(it) as File }.root.nameWithoutExtension.unique().collect{ prefix + it }.join(postfix).trim()
+        def content = ''
+        renameLog.each{ from, to ->
+            content = content + to.name.substring(0, to.name.lastIndexOf(".")) + '\n'
+        }
+        return content
 	}.memoize()
 
 	// make Kodi scan for new content and display notification message
