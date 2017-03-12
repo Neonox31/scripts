@@ -80,9 +80,9 @@ def forceIgnore(f) {
 
 
 // include artwork/nfo, pushover/pushbullet and ant utilities as required
-if (artwork || kodi || plex || emby) { include('lib/htpc') }
-if (pushover || pushbullet ) { include('lib/web') }
-if (gmail || mail) { include('lib/ant') }
+if (artwork || kodi || plex || emby) { include('htpc') }
+if (pushover || pushbullet ) { include('web') }
+if (gmail || mail) { include('ant') }
 
 
 
